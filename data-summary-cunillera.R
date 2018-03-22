@@ -2,7 +2,7 @@ library(tidyverse)
 library(readr)
 
 # TODO: confirm that these subject IDs are NOT Mturk worker ideas before releasing
-# this data at all. hello
+# this data at all.
 
 cunillera.data <- read_csv('data/cunillera_data.csv')
 cunillera.data$correct <- as.numeric(cunillera.data$correct)
