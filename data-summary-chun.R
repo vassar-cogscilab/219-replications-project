@@ -1,11 +1,13 @@
 library(tidyverse)
 library(readr)
 
-#Need to confirm which blocks correspond to which epochs
+#Need to confirm which effect size(s) (and which means if considering epoch)
+ #to consider
 
-#Read in data and extract data from test phase
+#Read in data
 chun.data <- read_csv('data/chun_data.csv')
-test.data <- chun.data %>% filter(phase=='test')
+#Extract data from test phase, filtering out incorrect trial responses
+test.data <- chun.data %>% filter(phase=='test') %>% filter(correct==1)
 
 #Convert block from <chr> to <dbl> and add the variable epoch to test.data
 test.data$block <- as.numeric(test.data$block)
@@ -35,3 +37,6 @@ test.aov <- with(test.means,
 summary(test.aov)
 
 #Compute Cohen's d
+#(d <- mean.diff / with(data, sqrt(mean(tapply(reaction_time, condition, var)))))
+
+#Small Telescopes Analysis
