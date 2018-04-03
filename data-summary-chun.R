@@ -1,8 +1,7 @@
 library(tidyverse)
 library(readr)
 
-#Need to confirm which effect size(s) (and which means if considering epoch)
- #to consider
+#Need to discuss differences between these results and presentation results
 
 #Read in data
 chun.data <- read_csv('data/chun_data.csv')
@@ -36,7 +35,27 @@ test.aov <- with(test.means,
 )
 summary(test.aov)
 
-#Compute Cohen's d
-#(d <- mean.diff / with(data, sqrt(mean(tapply(reaction_time, condition, var)))))
+#Compute effect size by computing the standardized difference between 
+ #the cueing effect for epochs 1 and 3
 
-#Small Telescopes Analysis
+epoch1.cueing.effect <-
+  mean(filter(test.data, oldORnew == "new", epoch==1)$rt) -
+  mean(filter(test.data, oldORnew == "old", epoch==1)$rt)
+
+epoch3.cueing.effect <-
+  mean(filter(test.data, oldORnew == "new", epoch==3)$rt) -
+  mean(filter(test.data, oldORnew == "old", epoch==3)$rt)
+
+#Note: If aggregating by subject_id first, the code is slightly different:
+
+#epoch1.cueing.effect <-
+  #mean(filter(test.means, oldORnew == "new", epoch==1)$reaction_time) -
+  #mean(filter(test.means, oldORnew == "old", epoch==1)$reaction_time)
+#epoch3.cueing.effect <-
+  #mean(filter(test.means, oldORnew == "new", epoch==3)$reaction_time) -
+  #mean(filter(test.means, oldORnew == "old", epoch==3)$reaction_time)
+
+diff <- epoch3.cueing.effect - epoch1.cueing.effect
+MSE.interaction <- 22272
+d <- diff/sqrt(MSE.interaction)
+d
