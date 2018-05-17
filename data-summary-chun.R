@@ -36,7 +36,7 @@ test.means <-
   summarise(reaction_time = mean(rt))
 test.means
 
-#Perform an ANOVA with Error term() to account for between-subjects variation
+#Perform an ANOVA with Error() term to account for between-subjects variation
 test.aov <- with(test.means,
                  aov(reaction_time ~ oldORnew * epoch +
                        Error(subject_id / (oldORnew * epoch)))
